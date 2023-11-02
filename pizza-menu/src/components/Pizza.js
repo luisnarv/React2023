@@ -1,12 +1,16 @@
-import { pizzaData } from "./data";
+// import { pizzaData } from "./data";
 import "../index.css";
 
-export default function Pizza() {
+export default function Pizza(props) {
+  console.log(props);
   return (
     <div className="pizzas">
-      <img src="img/focaccia.jpg" alt="focaccia" />
-      <h3>{pizzaData[1].name}</h3>
-      <p>{pizzaData[1].ingredients}</p>
+      <img src={props.img} alt={props.name} />
+      <div>
+        <h3>{props.name}</h3>
+        <p>{props.ingredients}</p>
+        <span>{props.price + 3}</span>
+      </div>
     </div>
   );
 }
