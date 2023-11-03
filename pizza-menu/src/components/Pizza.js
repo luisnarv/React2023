@@ -1,16 +1,15 @@
 // import { pizzaData } from "./data";
 import "../index.css";
 
-export default function Pizza(props) {
-  console.log(props);
+export default function Pizza({ pizzaObject }) {
   return (
-    <div className="pizzas">
-      <img src={props.img} alt={props.name} />
+    <li className={`pizza ${pizzaObject.soldOut ? "sold-out" : ""}`}>
+      <img src={pizzaObject.photoName} alt={pizzaObject.name} />
       <div>
-        <h3>{props.name}</h3>
-        <p>{props.ingredients}</p>
-        <span>{props.price + 3}</span>
+        <h3>{pizzaObject.name}</h3>
+        <p>{pizzaObject.ingredients}</p>
+        <span>{pizzaObject.soldOut ? "SOLD OUT" : pizzaObject.price + 3}</span>
       </div>
-    </div>
+    </li>
   );
 }
