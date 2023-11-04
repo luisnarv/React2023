@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap");
+
 * {
   margin: 0;
   padding: 0;
@@ -5,12 +7,16 @@
 }
 
 body {
-  font-family: sans-serif;
+  font-family: "IBM Plex Mono", sans-serif;
   background-color: white;
 }
 
 h1 {
   margin-bottom: 12px;
+}
+
+p {
+  margin-bottom: 10px;
 }
 
 .card {

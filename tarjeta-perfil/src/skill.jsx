@@ -1,10 +1,14 @@
 import "./style.css";
 
-export default function Skill(props) {
+export default function Skill({ skill, level, color }) {
   return (
-    <div className="skill" style={{ backgroundColor: props.color }}>
-      <span>{props.skill}</span>
-      <span>{props.emoji}</span>
+    <div className="skill" style={{ backgroundColor: color }}>
+      <span>{skill}</span>
+      <span>
+        {level === "Principiante" && " 📚"}
+        {level === "Intermedio" && " 👍"}
+        {level === "Avanzado" && " 👍"}
+      </span>
     </div>
   );
 }
