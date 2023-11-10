@@ -5,11 +5,11 @@ function App() {
   const [step, setStep] = useState(1);
   const [count, setCount] = useState(0);
 
-  function handleStepM() {
-    setStep((e) => e + 1);
-  }
-  function handleStepR() {
-    setStep((e) => e - 1);
+  //function handleStepM() {setStep((e) => e + 1); }
+  // function handleStepR() {setStep((e) => e - 1);}
+  function handleReset() {
+    setCount(0);
+    setStep(1);
   }
 
   function handleCountM() {
@@ -26,17 +26,35 @@ function App() {
     <div className="App">
       <section>
         <span>
-          <button onClick={handleStepR}> - </button>
+          <input
+            name="step"
+            type="range"
+            value={step}
+            min="0"
+            max="10"
+            onChange={(e) => setStep(Number(e.target.value))}
+          />
           Step: {step}
-          <button onClick={handleStepM}> + </button>
+          {/* <button onClick={handleStepR}> - </button> */}
+          {/* <button onClick={handleStepM}> + </button> */}
         </span>
         <span>
           <button onClick={handleCountR}> - </button>
-          Count: {count}
+          <input
+            type="number"
+            name=""
+            value={count}
+            onChange={(e) => setCount(Number(e.target.value))}
+          />
           <button onClick={handleCountM}> + </button>
         </span>
       </section>
       <Fecha C={count} D={date} />
+      <span>
+        <button onClick={handleReset} type="">
+          Reset
+        </button>
+      </span>
     </div>
   );
 }

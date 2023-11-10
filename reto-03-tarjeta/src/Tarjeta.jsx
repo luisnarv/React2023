@@ -6,10 +6,9 @@ export default function Tarjeta({ question }) {
   const data = question;
   const [answer, setAnswer] = useState(data);
 
-  function handleSelect(id) {
-    const arr = question;
-    let index = arr.findIndex((item) => item.id === id.id);
-
+  function handleSelect(index) {
+    //const arr = question;
+    //let index = arr.findIndex((item) => item.id === id.id);
     const active = { ...answer };
     active[index].active = !active[index].active;
     setAnswer(active);
@@ -20,7 +19,7 @@ export default function Tarjeta({ question }) {
         <span
           className={!answer[index] || answer[index].active ? "selected" : ""}
           key={e.id}
-          onClick={() => handleSelect(e)}
+          onClick={() => handleSelect(index)}
         >
           <p>
             {!answer[index] || answer[index].active === false

@@ -28,8 +28,8 @@ body {
 }
 
 .flashcards span {
-  border: 1px solid #e7e7e7;
-  background-color: #f7f7f7;
+  border: 3px #fffefe solid;
+  background-color: #dedbdb;
   border-radius: 7px;
   aspect-ratio: 2 / 1;
   display: flex;
@@ -38,13 +38,13 @@ body {
   text-align: center;
   padding: 20px;
   cursor: pointer;
-  border: 3px #333333 solid;
+
   border-radius: 10px;
 }
 
 span.selected {
-  border: 3px solid #333333;
-  background-color: #3ae031;
-  color: #000000;
+  border: 3px solid #ffffff;
+  background-color: #1b6117;
+  color: #ffffff;
   font-weight: bold;
 }
