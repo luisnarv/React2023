@@ -1,22 +1,23 @@
-import { useState } from "react";
+import React, { useContext, useState } from "react";
+import { MyContext } from "../App";
 
 export default function Form() {
   const [item, setItem] = useState({ description: "", quantity: 1 });
-  console.log(item);
+
+  const onData = useContext(MyContext);
 
   function handleSubmit(e) {
     e.preventDefault();
     const { description, quantity } = item;
-
     if (!item.description) return;
-
-    const newItem = { description, quantity, packend: false, id: Date.now() };
-    console.log(newItem);
+    const newItem = { description, quantity, packed: false, id: Date.now() };
+    onData(newItem);
+    setItem({ description: "", quantity: "" });
   }
 
   return (
     <form className="add-form" onSubmit={(e) => handleSubmit(e)}>
-      <h3>🤔 what do you need for your trip ?</h3>
+      <h3>🤔 What do you need for your trip ?</h3>
       <select
         name="quantity"
         value={item.quantity}
