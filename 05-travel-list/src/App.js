@@ -25,10 +25,18 @@ function App() {
   }
 
   function onUpdate(id) {
-    console.log(item);
     setItem((item) =>
       item.map((i) => (i.id === id ? { ...i, packed: !i.packed } : i))
     );
+  }
+
+  function clear() {
+    const confirm = window.confirm(
+      "Are you sure you want to delete all items?"
+    );
+    if (confirm) {
+      setItem([]);
+    }
   }
 
   return (
@@ -37,7 +45,12 @@ function App() {
       <MyContext.Provider value={handleItemData}>
         <Form />
       </MyContext.Provider>
-      <PackingList update={onUpdate} ondelete={onDeleteItems} items={item} />
+      <PackingList
+        clear={clear}
+        update={onUpdate}
+        ondelete={onDeleteItems}
+        items={item}
+      />
       <Stats items={item} />
     </div>
   );
