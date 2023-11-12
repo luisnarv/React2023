@@ -22,7 +22,6 @@ function App() {
       </button> 
       {open && <Steps messages={messages} />}*/}
       <Steps messages={messages} />
-      <Steps messages={messages} />
     </>
   );
 }
