@@ -2,6 +2,21 @@ import { useState } from "react";
 import Navbar from "./components/Navbar";
 import Main from "./components/Main";
 
+//----------------------------components-----Navbar----------------
+import Logo from "./components/Logo";
+import Search from "./components/Search";
+import NumResult from "./components/NumResult";
+
+//----------------------------components-----Main----------------
+import ListMovie from "./components/ListMovie";
+import Movies from "./components/Movies";
+import Movie from "./components/Movie";
+
+import WatchMovie from "./components/WatchMovie";
+import WatchList from "./components/WatchList";
+import WatchSummary from "./components/WatchSummary";
+import Lmovie from "./components/Lmovie";
+
 const tempMovieData = [
   {
     imdbID: "tt1375666",
@@ -58,8 +73,23 @@ export default function App() {
 
   return (
     <>
-      <Navbar movies={movies} />
-      <Main movies={movies} watched={watched} average={average} />
+      <Navbar>
+        <Logo /> <Search /> <NumResult movies={movies} />
+      </Navbar>
+      <Main>
+        <ListMovie>
+          <Movies>
+            <Movie movie={movies} />
+          </Movies>
+        </ListMovie>
+
+        <WatchMovie>
+          <WatchSummary watched={watched} average={average} />
+          <WatchList>
+            <Lmovie movie={movies} />
+          </WatchList>
+        </WatchMovie>
+      </Main>
     </>
   );
 }
