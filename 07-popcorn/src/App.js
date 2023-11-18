@@ -89,6 +89,14 @@ export default function App() {
             <Lmovie movie={movies} />
           </WatchList>
         </WatchMovie>
+        {/* <WatchMovie>
+          <WatchSummary watched={watched} average={average} />
+        </WatchMovie>
+        <WatchMovie>
+          <WatchList>
+            <Lmovie movie={movies} />
+          </WatchList>
+        </WatchMovie> */}
       </Main>
     </>
   );

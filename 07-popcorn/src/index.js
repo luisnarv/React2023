@@ -1,13 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
+import StarR from "./components/StarR";
 
 import "./index.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    {/* <App /> */}
+    <StarR maxRating={8} />
+    <StarR maxRating={3} />
+    <StarR maxRating={10} />
+    <StarR />
   </React.StrictMode>
 );
 
