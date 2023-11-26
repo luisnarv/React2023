@@ -1,19 +1,38 @@
 import { useState } from "react";
 
-export default function StarR({ maxRating = 5 }) {
-  const [rating, SetRating] = useState();
+export default function StarR({
+  maxRating = 5,
+  color = "#fcc419",
+  size = 30,
+  defaultRating = 0,
+  onSetRating,
+}) {
+  const [rating, SetRating] = useState(defaultRating);
   const [temp, setTemp] = useState();
 
   function handleRating(value) {
     SetRating(value);
+    onSetRating(value);
   }
+
+  const styles = {
+    lineHeight: "1",
+    margin: "0",
+    color,
+    // fontSize: `${size}px`
+    width: `${size}px`,
+    height: `${size}px`,
+    display: "block",
+    cursor: "pointer",
+  };
 
   return (
     <div style={Styles.container}>
       <section style={Styles.start}>
         {Array.from({ length: maxRating }, (_, i) => (
-          <span key={i} style={Styles.star}>
+          <span key={i} style={styles}>
             <Star
+              styles={styles}
               onRating={() => handleRating(i + 1)}
               //full={i <= rating - 1 ? true : false}
               full={temp ? temp >= i + 1 : rating >= i + 1}
@@ -28,15 +47,15 @@ export default function StarR({ maxRating = 5 }) {
   );
 }
 
-function Star({ full, onRating, onEnter, onLeave }) {
+function Star({ styles, full, onRating, onEnter, onLeave }) {
   return (
     <>
       {full ? (
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"
-          fill="#000"
-          stroke="#000"
+          fill={styles.color}
+          stroke={styles.color}
           onClick={onRating}
           onMouseEnter={onEnter}
           onMouseLeave={onLeave}
@@ -48,7 +67,7 @@ function Star({ full, onRating, onEnter, onLeave }) {
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
-          stroke="#000"
+          stroke={styles.color}
           onClick={onRating}
           onMouseEnter={onEnter}
           onMouseLeave={onLeave}
@@ -79,11 +98,5 @@ const Styles = {
   text: {
     lineHeight: "01",
     margin: "0",
-  },
-  star: {
-    width: "48px",
-    height: "48px",
-    display: "block",
-    cursor: "pointer",
   },
 };
