@@ -71,7 +71,14 @@ function App() {
         </Button>
       </div>
 
-      {selectF && <SplitBill onBill={onBill} select={selectF} Buton={Button} />}
+      {selectF && (
+        <SplitBill
+          onBill={onBill}
+          select={selectF}
+          Buton={Button}
+          key={selectF.id}
+        />
+      )}
     </div>
   );
 }
