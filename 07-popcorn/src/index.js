@@ -24,12 +24,12 @@ function Test() {
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    {/* <App /> */}
-    <StarR maxRating={8} defaultRating={8} />
+    <App />
+    {/* <StarR maxRating={8} defaultRating={8} />
     <StarR maxRating={3} />
     <StarR maxRating={10} />
-    <StarR />
-    <Test />
+    <StarR /> 
+    <Test />*/}
   </React.StrictMode>
 );
 

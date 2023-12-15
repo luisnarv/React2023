@@ -64,6 +64,11 @@ const tempWatchedData = [
   },
 ];
 
+const KEY = "21ac3e2f";
+fetch(`http://www.omdbapi.com/?apikey=${KEY}&s=spiderman`)
+  .then((res) => res.json())
+  .then((data) => console.log(data));
+
 export default function App() {
   const [movies, setMovies] = useState(tempMovieData);
   const [watched, setWatched] = useState(tempWatchedData);
