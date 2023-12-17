@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import Main from "./components/Main";
 
@@ -65,35 +65,95 @@ const tempWatchedData = [
 ];
 
 const KEY = "21ac3e2f";
-fetch(`http://www.omdbapi.com/?apikey=${KEY}&s=spiderman`)
-  .then((res) => res.json())
-  .then((data) => console.log(data));
+// fetch(`http://www.omdbapi.com/?apikey=${KEY}&s=spiderman`)
+//   .then((res) => res.json())
+//   .then((data) => console.log(data));
+
+const average = (arr) =>
+  arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
 export default function App() {
-  const [movies, setMovies] = useState(tempMovieData);
+  const [query, setQuery] = useState("spiderman");
+  const [movies, setMovies] = useState([]);
   const [watched, setWatched] = useState(tempWatchedData);
+  const [isloading, setIsloading] = useState(false);
+  const [error, setError] = useState("");
+  const [selectID, setSelectID] = useState("");
+  console.log(selectID);
 
-  const average = (arr) =>
-    arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
+  function handleSelectID(id) {
+    setSelectID((selectID) => (id === selectID ? null : id));
+  }
+  function handleClosemovie() {
+    setSelectID(null);
+  }
+
+  useEffect(
+    function () {
+      async function fetchMovie() {
+        try {
+          setError("");
+          setIsloading(true);
+          const res = await fetch(
+            `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`
+          );
+          if (!res.ok)
+            throw new Error("Something went wrong with fectching movies");
+
+          const data = await res.json();
+          console.log(data);
+          if (data.Response === "False") throw new Error(data.Error);
+          setMovies(data.Search);
+          setIsloading(false);
+        } catch (error) {
+          console.log(error.message);
+          setError(error.message);
+        }
+      }
+
+      if (query.length < 4) {
+        setMovies([]);
+        setError("");
+        return;
+      }
+
+      fetchMovie();
+    },
+    [query]
+  );
 
   return (
     <>
       <Navbar>
-        <Logo /> <Search /> <NumResult movies={movies} />
+        <Logo />
+        <Search query={query} setQuery={setQuery} />{" "}
+        <NumResult movies={movies} />
       </Navbar>
       <Main>
         <ListMovie>
-          <Movies>
-            <Movie movie={movies} />
-          </Movies>
+          {!isloading && !error && (
+            <Movies>
+              <Movie Onselect={handleSelectID} movie={movies} />
+            </Movies>
+          )}
+
+          {isloading && !error && <Loader />}
+          {error && <ErrorMessage message={error} />}
         </ListMovie>
 
         <WatchMovie>
-          <WatchSummary watched={watched} average={average} />
-          <WatchList>
-            <Lmovie movie={movies} />
-          </WatchList>
+          {selectID ? (
+            <MovieDetails selectID={selectID} onClose={handleClosemovie} />
+          ) : (
+            <>
+              <WatchSummary watched={watched} average={average} />
+              <WatchList>
+                <Lmovie movie={movies} />
+              </WatchList>
+            </>
+          )}
         </WatchMovie>
+
         {/* <WatchMovie>
           <WatchSummary watched={watched} average={average} />
         </WatchMovie>
@@ -104,5 +164,29 @@ export default function App() {
         </WatchMovie> */}
       </Main>
     </>
+  );
+}
+
+function Loader() {
+  return <p className="loader">Loading...</p>;
+}
+
+function ErrorMessage({ message }) {
+  return (
+    <p className="error">
+      <span>📣</span>
+      {message}
+    </p>
+  );
+}
+
+function MovieDetails({ selectID, onClose }) {
+  return (
+    <div className="details">
+      <button className="btn-back" onClick={onClose}>
+        &larr;
+      </button>
+      {selectID}
+    </div>
   );
 }
