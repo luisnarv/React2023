@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import Main from "./components/Main";
+import StarR from "./components/StarR";
 
 //----------------------------components-----Navbar----------------
 import Logo from "./components/Logo";
@@ -181,12 +182,62 @@ function ErrorMessage({ message }) {
 }
 
 function MovieDetails({ selectID, onClose }) {
+  const [movie, setMovie] = useState({});
+  const [load, setLoad] = useState(false);
+
+  useEffect(
+    function () {
+      setLoad(true);
+      async function getMovieID() {
+        const res = await fetch(
+          `http://www.omdbapi.com/?apikey=${KEY}&i=${selectID}`
+        );
+        const data = await res.json();
+        console.log(data, "movieload");
+        setMovie(data);
+        setLoad(false);
+      }
+      getMovieID();
+    },
+    [selectID]
+  );
+
   return (
     <div className="details">
-      <button className="btn-back" onClick={onClose}>
-        &larr;
-      </button>
-      {selectID}
+      {load ? (
+        <Loader />
+      ) : (
+        <>
+          <header>
+            <button className="btn-back" onClick={onClose}>
+              &larr;
+            </button>
+            <img src={movie.Poster} alt={`Poster of ${movie.Movie} movie`} />
+
+            <div className="details-overview">
+              <h2>{movie.Title}</h2>
+              <p>
+                {movie.Released} &bull; {movie.Runtime}{" "}
+              </p>
+              <p>{movie.Genre}</p>
+              <p>
+                <span>⭐</span>
+                {movie.imdbID} IMDB rating
+              </p>
+            </div>
+          </header>
+          <section>
+            <div className="rating">
+              <StarR maxRating={10} size={20} />
+            </div>
+            <p>
+              <em>{movie.Plot}</em>
+            </p>
+            <p>Starring {movie.Actors}</p>
+            <p>Directed by {movie.Director}</p>
+          </section>
+        </>
+      )}
     </div>
   );
 }

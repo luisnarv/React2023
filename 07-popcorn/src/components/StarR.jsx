@@ -12,7 +12,7 @@ export default function StarR({
 
   function handleRating(value) {
     SetRating(value);
-    onSetRating(value);
+    // onSetRating(value);
   }
 
   const styles = {
@@ -88,15 +88,16 @@ const Styles = {
   container: {
     display: "flex",
     alignItems: "center",
-    gap: "16px",
+    gap: "10px",
   },
   start: {
     display: "flex",
     gap: "4px",
+    flexDirection: "row",
   },
 
   text: {
     lineHeight: "01",
-    margin: "0",
+    margin: "0px",
   },
 };
