@@ -11,10 +11,10 @@ export default function WatchSummary({ watched, average }) {
           <span>🎞 {watched.length} Movies </span>
         </p>
         <p>
-          <span>⭐{avgImdbRating}</span>
+          <span>⭐{avgImdbRating.toFixed(2)}</span>
         </p>
         <p>
-          <span>⭐ {avgUserRating}</span>
+          <span>⭐ {avgUserRating.toFixed(2)}</span>
         </p>
         <p>
           <span>🕔 {avgRuntime} min </span>

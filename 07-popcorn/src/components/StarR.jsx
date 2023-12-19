@@ -12,7 +12,7 @@ export default function StarR({
 
   function handleRating(value) {
     SetRating(value);
-    // onSetRating(value);
+    onSetRating(value);
   }
 
   const styles = {

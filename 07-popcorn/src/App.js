@@ -76,17 +76,24 @@ const average = (arr) =>
 export default function App() {
   const [query, setQuery] = useState("spiderman");
   const [movies, setMovies] = useState([]);
-  const [watched, setWatched] = useState(tempWatchedData);
+  const [watched, setWatched] = useState([]);
   const [isloading, setIsloading] = useState(false);
   const [error, setError] = useState("");
   const [selectID, setSelectID] = useState("");
-  console.log(selectID);
 
   function handleSelectID(id) {
     setSelectID((selectID) => (id === selectID ? null : id));
   }
   function handleClosemovie() {
     setSelectID(null);
+  }
+
+  function handleAddWatched(movie) {
+    setWatched((watched) => [...watched, movie]);
+  }
+
+  function handleDeleteWatches(id) {
+    setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
   }
 
   useEffect(
@@ -144,12 +151,17 @@ export default function App() {
 
         <WatchMovie>
           {selectID ? (
-            <MovieDetails selectID={selectID} onClose={handleClosemovie} />
+            <MovieDetails
+              selectID={selectID}
+              onClose={handleClosemovie}
+              onAddWatched={handleAddWatched}
+              watched={watched}
+            />
           ) : (
             <>
               <WatchSummary watched={watched} average={average} />
               <WatchList>
-                <Lmovie movie={movies} />
+                <Lmovie onDelete={handleDeleteWatches} movie={watched} />
               </WatchList>
             </>
           )}
@@ -181,9 +193,30 @@ function ErrorMessage({ message }) {
   );
 }
 
-function MovieDetails({ selectID, onClose }) {
+function MovieDetails({ selectID, onClose, onAddWatched, watched }) {
   const [movie, setMovie] = useState({});
   const [load, setLoad] = useState(false);
+  const [userRating, setUserRating] = useState(0);
+
+  const isWatched = watched.map((e) => e.imdbID).includes(selectID);
+  const watchUserRating = watched.find(
+    (e) => e.imdbID === selectID
+  )?.userRating;
+
+  function handleAdd() {
+    const newWatchMovie = {
+      imdbID: selectID,
+      title: movie.Title,
+      year: movie.Year,
+      poster: movie.Poster,
+      imdbRating: Number(movie.imdbRating),
+      runtime: Number(movie.Runtime.split(" ").at(0)),
+      userRating,
+    };
+    console.log(newWatchMovie, "new movie");
+    onAddWatched(newWatchMovie);
+    onClose();
+  }
 
   useEffect(
     function () {
@@ -222,13 +255,26 @@ function MovieDetails({ selectID, onClose }) {
               <p>{movie.Genre}</p>
               <p>
                 <span>⭐</span>
-                {movie.imdbID} IMDB rating
+                {movie.imdbRating} IMDB rating
               </p>
             </div>
           </header>
           <section>
             <div className="rating">
-              <StarR maxRating={10} size={20} />
+              {!isWatched ? (
+                <>
+                  <StarR maxRating={10} size={20} onSetRating={setUserRating} />
+                  {userRating > 0 && (
+                    <button className="btn-add" onClick={handleAdd}>
+                      +- Add to list
+                    </button>
+                  )}
+                </>
+              ) : (
+                <p>
+                  You rated with movie {watchUserRating} <span>🌟 </span>
+                </p>
+              )}
             </div>
             <p>
               <em>{movie.Plot}</em>
