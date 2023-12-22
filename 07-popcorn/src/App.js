@@ -81,6 +81,8 @@ export default function App() {
   const [error, setError] = useState("");
   const [selectID, setSelectID] = useState("");
 
+  console.log(movies, "esto es viendo ahora");
+
   function handleSelectID(id) {
     setSelectID((selectID) => (id === selectID ? null : id));
   }
@@ -98,24 +100,29 @@ export default function App() {
 
   useEffect(
     function () {
+      const controller = new AbortController();
       async function fetchMovie() {
         try {
           setError("");
           setIsloading(true);
           const res = await fetch(
-            `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`
+            `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`,
+            { signal: controller.signal }
           );
           if (!res.ok)
             throw new Error("Something went wrong with fectching movies");
 
           const data = await res.json();
-          console.log(data);
+
           if (data.Response === "False") throw new Error(data.Error);
           setMovies(data.Search);
           setIsloading(false);
+          setError("");
         } catch (error) {
-          console.log(error.message);
-          setError(error.message);
+          //console.log(error.message);
+          if (error.name !== "AbortError") {
+            setError(error.message);
+          }
         }
       }
 
@@ -126,6 +133,9 @@ export default function App() {
       }
 
       fetchMovie();
+      return () => {
+        controller.abort();
+      };
     },
     [query]
   );
@@ -218,6 +228,17 @@ function MovieDetails({ selectID, onClose, onAddWatched, watched }) {
     onClose();
   }
 
+  useEffect(() => {
+    function callback(e) {
+      if (e.code === "Escape") onClose();
+    }
+    document.addEventListener("keydown", callback);
+
+    return () => {
+      document.removeEventListener("keydown", callback);
+    };
+  }, [onClose]);
+
   useEffect(
     function () {
       setLoad(true);
@@ -226,7 +247,7 @@ function MovieDetails({ selectID, onClose, onAddWatched, watched }) {
           `http://www.omdbapi.com/?apikey=${KEY}&i=${selectID}`
         );
         const data = await res.json();
-        console.log(data, "movieload");
+
         setMovie(data);
         setLoad(false);
       }
@@ -234,6 +255,13 @@ function MovieDetails({ selectID, onClose, onAddWatched, watched }) {
     },
     [selectID]
   );
+
+  useEffect(() => {
+    if (!movie) return;
+    document.title = `movie | ${movie.Title}`;
+
+    return () => (document.title = "UsePopcorn");
+  }, [movie]);
 
   return (
     <div className="details">
