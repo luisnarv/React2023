@@ -28,7 +28,7 @@ function App() {
       }
     }
     frankfurterApi();
-  }, [mainMoney, secundaryMoney]);
+  }, [value, mainMoney, secundaryMoney]);
 
   return (
     <div className="App">
