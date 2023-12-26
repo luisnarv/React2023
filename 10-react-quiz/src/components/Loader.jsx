@@ -3,6 +3,7 @@ export default function Loader() {
     <div className="loader-container">
       <div className="loader"></div>
       <p>Loading questions...</p>
+      <p>Hola</p>
     </div>
   );
 }
