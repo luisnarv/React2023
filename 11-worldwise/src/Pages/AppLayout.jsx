@@ -1,4 +1,4 @@
-import Map from "../Components/Map";
+import Map from "../Components/Map/Map";
 import SideBar from "../Components/NavBar/SideBar/SideBar";
 import styles from "./styles/AppLayout.module.css";
 
