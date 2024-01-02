@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styles from "./CityItem.module.css";
 
 const formatDate = (date) =>
@@ -8,16 +9,19 @@ const formatDate = (date) =>
   }).format(new Date(date));
 
 // eslint-disable-next-line react/prop-types
-export default function CityItem({ city }) {
-  // eslint-disable-next-line react/prop-types
-  const { cityName, emoji, date } = city;
-  console.log(city, "esto es city");
+export default function CityItem({ cityName, emoji, date, id, position }) {
   return (
-    <li className={styles.cityItem}>
-      <span className={styles.emoji}>{emoji}</span>
-      <h3 className={styles.name}>{cityName}</h3>
-      <time className={styles.date}>{formatDate(date)}</time>
-      <button className={styles.deleteBtn}>&times;</button>
+    <li>
+      <Link
+        className={styles.cityItem}
+        // eslint-disable-next-line react/prop-types
+        to={`${id}?lat=${position.lat}&lng=${position.lng}`}
+      >
+        <span className={styles.emoji}>{emoji}</span>
+        <h3 className={styles.name}>{cityName}</h3>
+        <time className={styles.date}>{formatDate(date)}</time>
+        <button className={styles.deleteBtn}>&times;</button>
+      </Link>
     </li>
   );
 }

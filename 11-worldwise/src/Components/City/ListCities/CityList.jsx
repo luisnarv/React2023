@@ -7,7 +7,6 @@ import Message from "../../Message/Message";
 // eslint-disable-next-line react/prop-types
 export default function CityList({ data, loading }) {
   if (loading === true) return <Loading />;
-  console.log(data);
 
   if (!data.length)
     return (
