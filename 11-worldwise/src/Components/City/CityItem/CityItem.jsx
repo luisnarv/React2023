@@ -1,5 +1,7 @@
+/* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
 import styles from "./CityItem.module.css";
+import { useCiti } from "../../../Contexts/CityContext";
 
 const formatDate = (date) =>
   new Intl.DateTimeFormat("en", {
@@ -8,12 +10,17 @@ const formatDate = (date) =>
     year: "numeric",
   }).format(new Date(date));
 
-// eslint-disable-next-line react/prop-types
-export default function CityItem({ cityName, emoji, date, id, position }) {
+export default function CityItem({ cityData }) {
+  const { currentCity } = useCiti();
+
+  const { cityName, emoji, date, id, position } = cityData;
+
   return (
     <li>
       <Link
-        className={styles.cityItem}
+        className={`${styles.cityItem} ${
+          id === currentCity.id ? styles.cityItemActive : ""
+        }  `}
         // eslint-disable-next-line react/prop-types
         to={`${id}?lat=${position.lat}&lng=${position.lng}`}
       >
