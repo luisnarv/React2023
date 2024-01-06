@@ -1,4 +1,4 @@
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styles from "./Map.module.css";
 import Button from "../Button/Button";
 import {
@@ -12,18 +12,17 @@ import {
 import { useEffect, useState } from "react";
 import { useCiti } from "../../Contexts/CityContext";
 import { useGeolocation } from "../../Hooks/useGeoLocation";
+import { useUrlLocate } from "../../Hooks/useUrlLocate";
 
 export default function Map() {
   const { cities } = useCiti();
-  const [mapPosition, setMapPosition] = useState([40, 0]);
-  const [searchParams] = useSearchParams();
+  const [mapPosition, setMapPosition] = useState([10, -20]);
   const {
     isLoading: isLoadingPosition,
     position: geoLocationPosition,
     getPosition,
   } = useGeolocation();
-  const mapLat = searchParams.get("lat");
-  const mapLng = searchParams.get("lng");
+  const [mapLat, mapLng] = useUrlLocate();
 
   useEffect(() => {
     if (mapLat && mapLng) setMapPosition([mapLat, mapLng]);
@@ -69,6 +68,7 @@ export default function Map() {
   );
 }
 
+// eslint-disable-next-line react/prop-types
 function ChangeCenter({ position }) {
   const map = useMap();
   map.setView(position);
