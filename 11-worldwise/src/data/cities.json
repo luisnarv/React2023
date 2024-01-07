@@ -37,76 +37,16 @@
       "id": 98443197
     },
     {
-      "cityName": "Vistahermosa",
-      "country": "Colombia",
-      "emoji": "🇨🇴",
-      "date": "2024-01-06T16:09:21.835Z",
+      "cityName": "Kyzyl-Suu",
+      "country": "Kyrgyzstan",
+      "emoji": "🇰🇬",
+      "date": "2024-01-07T13:52:05.212Z",
       "notes": "",
       "position": {
-        "lat": "2.986927393334876",
-        "lng": "-73.65234375000001"
+        "lat": "42.032974332441405",
+        "lng": "77.34375000000001"
       },
       "id": 98443198
-    },
-    {
-      "cityName": "Atlantic/Cape_Verde",
-      "country": "Cabo Verde",
-      "emoji": "🇨🇻",
-      "date": "2024-01-06T16:10:56.946Z",
-      "notes": "",
-      "position": {
-        "lat": "15.284185114076445",
-        "lng": "-23.994140625000004"
-      },
-      "id": 98443199
-    },
-    {
-      "cityName": "Tiris Zemmour",
-      "country": "Mauritania",
-      "emoji": "🇲🇷",
-      "date": "2024-01-06T16:11:25.987Z",
-      "notes": "",
-      "position": {
-        "lat": "22.87744046489714",
-        "lng": "-13.051757812500002"
-      },
-      "id": 98443200
-    },
-    {
-      "cityName": "Bonnefond",
-      "country": "France",
-      "emoji": "🇫🇷",
-      "date": "2024-01-06T16:11:57.179Z",
-      "notes": "",
-      "position": {
-        "lat": "45.521743896993634",
-        "lng": "2.0214843750000004"
-      },
-      "id": 98443201
-    },
-    {
-      "cityName": "Filadelfia",
-      "country": "Paraguay",
-      "emoji": "🇵🇾",
-      "date": "2024-01-06T16:12:10.089Z",
-      "notes": "",
-      "position": {
-        "lat": "-21.94304553343818",
-        "lng": "-60.46875000000001"
-      },
-      "id": 98443202
-    },
-    {
-      "cityName": "Durazno",
-      "country": "Uruguay",
-      "emoji": "🇺🇾",
-      "date": "2024-01-06T16:26:28.154Z",
-      "notes": "",
-      "position": {
-        "lat": "-33.35806161277886",
-        "lng": "-56.25000000000001"
-      },
-      "id": 98443203
     }
   ]
 }
