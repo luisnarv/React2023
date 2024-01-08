@@ -4,12 +4,21 @@ import { createContext, useContext, useReducer } from "react";
 const AuthContext = createContext();
 
 const initialState = {
-  user: null,
+  // user: null,
+  error: "",
+  user: {
+    name: "Jack",
+    email: "jack@example.com",
+    password: "qwerty",
+    avatar: "https://i.pravatar.cc/100?u=zz",
+  },
   isAuntheticated: false,
 };
 
 function reducer(state, action) {
   switch (action.type) {
+    case "login/error":
+      return { ...state, error: "The username or password is wrong" };
     case "login":
       return { ...state, user: action.payload, isAuntheticated: true };
 
@@ -28,23 +37,28 @@ const FAKE_USER = {
   avatar: "https://i.pravatar.cc/100?u=zz",
 };
 
-function AuthProvide({ childre }) {
-  const [{ user, isAuntheticated }, dispatch] = useReducer(
+function AuthProvider({ children }) {
+  const [{ error, user, isAuntheticated }, dispatch] = useReducer(
     reducer,
     initialState
   );
 
   function login(email, password) {
-    if (email === FAKE_USER.email && password === FAKE_USER.password)
+    if (email === FAKE_USER.email && password === FAKE_USER.password) {
       dispatch({ type: "login", payload: FAKE_USER });
+    } else {
+      dispatch({ type: "login/error" });
+    }
   }
   function logout() {
     dispatch({ type: "logout" });
   }
 
   return (
-    <AuthContext.Provider value={{ login, logout }}>
-      {childre}
+    <AuthContext.Provider
+      value={{ error, login, logout, user, isAuntheticated }}
+    >
+      {children}
     </AuthContext.Provider>
   );
 }
@@ -56,4 +70,4 @@ function useAuth() {
   return context;
 }
 
-export { AuthProvide, useAuth };
+export { AuthProvider, useAuth };

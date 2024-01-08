@@ -1,15 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./styles/Login.module.css";
 import NavBar from "../Components/NavBar/MainNav/NavBar";
+import { useAuth } from "../Contexts/FakeAuthContext";
+import { useNavigate } from "react-router-dom";
+import Button from "../Components/Button/Button";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const { login, error, isAuntheticated } = useAuth();
+  const [email, setEmail] = useState("jack@example.com");
+  const [password, setPassword] = useState("qwerty");
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (email && password) login(email, password);
+  }
+
+  useEffect(() => {
+    if (isAuntheticated === true) navigate("/app", { replace: true });
+  }, [isAuntheticated, navigate]);
 
   return (
     <main className={styles.login}>
       <NavBar />
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={(e) => handleSubmit(e)}>
+        <p>titulo de logueado{isAuntheticated}</p>
         <div className={styles.row}>
           <label htmlFor="email">Email address</label>
           <input
@@ -31,8 +46,9 @@ export default function Login() {
         </div>
 
         <div>
-          <button>Login</button>
+          <Button type={"primary"}>Login</Button>
         </div>
+        <span className={styles.error}>{error}</span>
       </form>
     </main>
   );

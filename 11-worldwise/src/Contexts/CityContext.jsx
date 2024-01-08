@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useContext, useReducer } from "react";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect } from "react";
 
 const CityContext = createContext();
 

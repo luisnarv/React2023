@@ -11,8 +11,12 @@ import CountryList from "./Components/Country/CountryList/CountryList";
 import City from "./Components/City/city/City";
 import Form from "./Components/Form/Form";
 import { CityProvider } from "./Contexts/CityContext";
+import { useAuth } from "./Contexts/FakeAuthContext";
+import ProtectedRoute from "./Pages/ProtectedRoute";
 
 function App() {
+  const { isAuntheticated } = useAuth();
+
   return (
     <>
       <CityProvider>
@@ -22,14 +26,26 @@ function App() {
             <Route path="product" element={<Product />} />
             <Route path="pricing" element={<Pricing />} />
             <Route path="login" element={<Login />} />
-            <Route path="app" element={<AppLayout />}>
-              <Route index element={<Navigate replace to={"cities"} />} />
-              <Route path="cities" element={<CityList />} />
-              <Route path="cities/:id" element={<City />} />
-
-              <Route path="countries" element={<CountryList />} />
-              <Route path="form" element={<Form />} />
+            <Route
+              path="app"
+              element={
+                <ProtectedRoute>
+                  <AppLayout />
+                </ProtectedRoute>
+              }
+            >
+              {" "}
+              {isAuntheticated && (
+                <>
+                  <Route index element={<Navigate replace to={"cities"} />} />
+                  <Route path="cities" element={<CityList />} />
+                  <Route path="cities/:id" element={<City />} />
+                  <Route path="countries" element={<CountryList />} />
+                  <Route path="form" element={<Form />} />
+                </>
+              )}
             </Route>
+
             <Route path="*" element={<Notfound />} />
           </Routes>
         </BrowserRouter>
