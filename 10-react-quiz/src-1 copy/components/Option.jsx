@@ -1,13 +1,7 @@
 import React from "react";
-import { useQuiz } from "../Context/QuizContext";
 
-export default function Option() {
-  const { questions, answer, index, newAnswer } = useQuiz();
-
-  const question = questions.at(index);
-
+export default function Option({ question, dispatch, answer }) {
   const hasAnswered = answer !== null;
-
   return (
     <div>
       <div className="options">
@@ -22,7 +16,7 @@ export default function Option() {
                   : "wrong"
                 : ""
             }`}
-            onClick={() => newAnswer(index)}
+            onClick={() => dispatch({ type: "newAnswer", payload: index })}
           >
             {option}
           </button>
