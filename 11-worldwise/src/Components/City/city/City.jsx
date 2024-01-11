@@ -18,12 +18,11 @@ function City() {
   const { id } = useParams();
   const { currentCity, GetCities, isLoading } = useCiti();
 
-  // eslint-disable-next-line no-unused-vars
   const { cityName, emoji, date, notes } = currentCity;
 
   useEffect(() => {
     GetCities(id);
-  }, [id]);
+  }, [id, GetCities]);
 
   if (isLoading === true) return <Loading />;
 

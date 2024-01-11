@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useCallback, useContext, useReducer } from "react";
 
 const QuizContext = createContext();
 
@@ -102,9 +102,8 @@ function Quizcontext({ children }) {
     dispatch({ type: data });
   }
 
-  function fetchData() {
+  const fetchData = useCallback(function fetchData() {
     async function fetchQuiz() {
-      // dispatch({ type: "loading" });
       try {
         const res = await fetch(`http://localhost:8001/questions`);
         const data = await res.json();
@@ -112,15 +111,12 @@ function Quizcontext({ children }) {
         dispatch({ type: "dataReceived", payload: data });
         dispatch({ type: "num/question", payload: Number(data.length) });
         dispatch({ type: "num/maxPoints", payload: maxPoints });
-
-        console.log(data, "data desde el fetcData");
       } catch (error) {
         dispatch({ type: "dataFailed" });
-        //console.error(error.message);
       }
     }
     fetchQuiz();
-  }
+  }, []);
 
   function newAnswer(index) {
     dispatch({ type: "newAnswer", payload: index });
