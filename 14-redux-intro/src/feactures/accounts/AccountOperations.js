@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useDispatch, useSelector, useStore } from "react-redux";
+import { deposit, payLoan, requestLoan, withdraw } from "./AccountSlice";
 
 function AccountOperations() {
   const [depositAmount, setDepositAmount] = useState("");
@@ -7,13 +9,36 @@ function AccountOperations() {
   const [loanPurpose, setLoanPurpose] = useState("");
   const [currency, setCurrency] = useState("USD");
 
-  function handleDeposit() {}
+  const dispatch = useDispatch();
+  const {
+    loan: currentLoan,
+    loanPurpose: currentLoanPurpose,
+    balance,
+  } = useSelector((store) => store.account);
+  console.log(balance, "esto es use");
 
-  function handleWithdrawal() {}
+  function handleDeposit() {
+    if (!depositAmount) return;
+    dispatch(deposit(Number(depositAmount)));
+    setDepositAmount("");
+  }
 
-  function handleRequestLoan() {}
+  function handleWithdrawal() {
+    if (!withdrawalAmount) return;
+    dispatch(withdraw(withdrawalAmount));
+    setWithdrawalAmount("");
+  }
 
-  function handlePayLoan() {}
+  function handleRequestLoan() {
+    if (!loanAmount || !loanPurpose) return;
+    dispatch(requestLoan(loanAmount, loanPurpose));
+    setLoanAmount("");
+    setLoanPurpose("");
+  }
+
+  function handlePayLoan() {
+    dispatch(payLoan());
+  }
 
   return (
     <div>
@@ -24,7 +49,7 @@ function AccountOperations() {
           <input
             type="number"
             value={depositAmount}
-            onChange={(e) => setDepositAmount(+e.target.value)}
+            onChange={(e) => setDepositAmount(e.target.value)}
           />
           <select
             value={currency}
@@ -43,7 +68,7 @@ function AccountOperations() {
           <input
             type="number"
             value={withdrawalAmount}
-            onChange={(e) => setWithdrawalAmount(+e.target.value)}
+            onChange={(e) => setWithdrawalAmount(e.target.value)}
           />
           <button onClick={handleWithdrawal}>
             Withdraw {withdrawalAmount}
@@ -55,7 +80,7 @@ function AccountOperations() {
           <input
             type="number"
             value={loanAmount}
-            onChange={(e) => setLoanAmount(+e.target.value)}
+            onChange={(e) => setLoanAmount(e.target.value)}
             placeholder="Loan amount"
           />
           <input
@@ -66,10 +91,15 @@ function AccountOperations() {
           <button onClick={handleRequestLoan}>Request loan</button>
         </div>
 
-        <div>
-          <span>Pay back $X</span>
-          <button onClick={handlePayLoan}>Pay loan</button>
-        </div>
+        {currentLoan > 0 && (
+          <div>
+            <span>
+              Pay back ${currentLoan} / ({currentLoanPurpose})
+            </span>
+            <br />
+            <button onClick={handlePayLoan}>Pay loan</button>
+          </div>
+        )}
       </div>
     </div>
   );
