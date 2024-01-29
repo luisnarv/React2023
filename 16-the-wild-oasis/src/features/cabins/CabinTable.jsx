@@ -11,7 +11,6 @@ const Table = styled.div`
   border-radius: 7px;
   overflow: hidden;
 `;
-console.log("hola");
 const TableHeader = styled.header`
   display: grid;
   grid-template-columns: 0.6fr 1.8fr 2.2fr 1fr 1fr 1fr;

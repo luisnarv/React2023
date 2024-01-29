@@ -11,7 +11,7 @@ import FormRow from "../../ui/FormRow";
 import { useCreateCabin } from "./useCreateCabin";
 import { useEditCabin } from "./useEditCabin";
 
-function CreateCabinForm({ cabinToEdit = {} }) {
+function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
   const { id: editId, ...editValues } = cabinToEdit;
   const isEditSession = Boolean(editId);
   const { register, handleSubmit, reset, getValues, formState } = useForm({
@@ -31,6 +31,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
         {
           onSuccess: () => {
             reset();
+            onCloseModal?.();
           },
         }
       );
@@ -40,6 +41,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
         {
           onSuccess: () => {
             reset();
+            onCloseModal?.();
           },
         }
       );
@@ -48,7 +50,10 @@ function CreateCabinForm({ cabinToEdit = {} }) {
   //function onError(error) {}
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form
+      onSubmit={handleSubmit(onSubmit)}
+      type={onCloseModal ? "modal" : "regular"}
+    >
       <FormRow label="cabin name" error={errors?.name?.message}>
         <Input
           disabled={isWordking}
@@ -120,7 +125,12 @@ function CreateCabinForm({ cabinToEdit = {} }) {
       <FormRow>
         {/* type is an HTML attribute! */}
 
-        <Button disabled={isWordking} variation="secondary" type="reset">
+        <Button
+          disabled={isWordking}
+          variation="secondary"
+          type="reset"
+          onClick={() => onCloseModal?.()}
+        >
           Cancel
         </Button>
         <Button disabled={isWordking}>
