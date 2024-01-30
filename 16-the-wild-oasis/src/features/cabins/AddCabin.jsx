@@ -1,11 +1,10 @@
 import Button from "../../ui/Button";
 import Modal from "../../ui/Modal";
-import CabinTable from "./CabinTable";
 import CreateCabinForm from "./CreateCabinForm";
 
 export default function AddCabin() {
   return (
-    <>
+    <div>
       <Modal>
         <Modal.Open opens="cabin-form">
           <Button>Add new cabin</Button>
@@ -15,14 +14,6 @@ export default function AddCabin() {
         </Modal.Window>
       </Modal>
 
-      <Modal>
-        <Modal.Open opens="table">
-          <Button>Open cabin tablen</Button>
-        </Modal.Open>
-        <Modal.Window name="table">
-          <CabinTable />
-        </Modal.Window>
-      </Modal>
       {/* {" "}
       <Button onClick={() => setIsOpenModal(!isOpenModal)}>
         Add new cabin
@@ -32,6 +23,6 @@ export default function AddCabin() {
           <CreateCabinForm onCloseModal={() => setIsOpenModal(false)} />
         </Modal>
       )} */}
-    </>
+    </div>
   );
 }
