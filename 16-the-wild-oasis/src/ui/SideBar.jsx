@@ -4,7 +4,7 @@ import Logo from "./Logo";
 import Uploader from "../data/Uploader";
 
 const StyleSideBar = styled.aside`
-  background-color: var(--color-gray-0);
+  background-color: var(--color-grey-0);
   padding: 3.2rem 2.4rem;
   border-right: 3px solid var(--color-grey-100);
 
