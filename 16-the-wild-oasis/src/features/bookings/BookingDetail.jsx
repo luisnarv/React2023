@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { useMoveBack } from "../../hooks/useMoveBack";
 import { useDeleteBooking } from "./useDeleteBooking";
 import { useCheckOut } from "../check-in-out/useCheckOut";
+import Empty from "../../ui/Empty";
 
 const HeadingGroup = styled.div`
   display: flex;
@@ -36,8 +37,9 @@ function BookingDetail() {
     "checked-in": "green",
     "checked-out": "silver",
   };
-
   if (isLoading) return <Spinner />;
+  if (!booking.length || !booking) return <Empty resourceName="booking" />;
+
   const { status, id: bookingId } = booking;
 
   return (
