@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import MainNav from "./MainNav";
 import Logo from "./Logo";
-import Uploader from "../data/Uploader";
+// import Uploader from "../data/Uploader";
 
 const StyleSideBar = styled.aside`
   background-color: var(--color-grey-0);
@@ -21,7 +21,7 @@ export default function SideBar() {
       <Logo />
       <MainNav />
 
-      <Uploader />
+      {/* <Uploader /> */}
     </StyleSideBar>
   );
 }

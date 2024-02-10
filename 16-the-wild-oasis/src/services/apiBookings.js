@@ -2,6 +2,48 @@ import { getToday } from "../utils/helpers";
 import supabase from "./supabase";
 import { PAGE_SIZE } from "../utils/constans";
 
+export async function addBoking({
+  startDate,
+  endDate,
+  numNights,
+  numGuests,
+  cabinPrice,
+  hasBreakfast,
+  observations,
+  cabinId,
+  guestId,
+  isPaid,
+  extrasPrice,
+  totalPrice,
+  status,
+}) {
+  const booking = {
+    startDate,
+    endDate,
+    numNights,
+    numGuests,
+    cabinPrice,
+    hasBreakfast,
+    observations,
+    cabinId,
+    guestId,
+    isPaid,
+    extrasPrice,
+    status,
+    totalPrice,
+  };
+  const { data, error } = await supabase
+    .from("bookings")
+    .insert([booking])
+    .select();
+
+  if (error) {
+    console.log(error.message);
+    throw new Error("Cannot create booking");
+  }
+  return data;
+}
+
 export async function getBookings({ filter, sortBy, page }) {
   let query = supabase
     .from("bookings")

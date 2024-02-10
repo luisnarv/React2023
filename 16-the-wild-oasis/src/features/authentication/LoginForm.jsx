@@ -15,7 +15,7 @@ function LoginForm() {
     e.preventDefault();
 
     if (!password || !email) return;
-
+    console.log("ingreso el usuario");
     loginUser(
       { email, password },
       {

@@ -1,5 +1,5 @@
 import { formatDistance, parseISO } from "date-fns";
-import { differenceInDays } from "date-fns";
+import { differenceInDays, add } from "date-fns";
 
 // We want to make this function work for both Date objects and strings (which come from Supabase)
 export const subtractDates = (dateStr1, dateStr2) =>
@@ -28,3 +28,9 @@ export const formatCurrency = (value) =>
   new Intl.NumberFormat("en", { style: "currency", currency: "USD" }).format(
     value
   );
+
+export function fromToday(numDays, withTime = false) {
+  const date = add(new Date(), { days: numDays });
+  if (!withTime) date.setUTCHours(0, 0, 0, 0);
+  return date.toISOString().slice(0, -1);
+}

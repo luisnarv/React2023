@@ -21,7 +21,7 @@ export default function ProtectedRute({ children }) {
 
   //2. If there is NO authenticated user, redirect to the login/
   useEffect(() => {
-    if (!isAuthenticated && !isLoading) navigate("login");
+    if (!isAuthenticated && !isLoading) navigate("/login");
   }, [isAuthenticated, isLoading, navigate]);
 
   //3. While loading, show a spinner
@@ -33,5 +33,5 @@ export default function ProtectedRute({ children }) {
     );
 
   //4. If there IS a user, return the app
-  return <div>{children}</div>;
+  if (isAuthenticated) return <div>{children}</div>;
 }

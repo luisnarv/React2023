@@ -10,6 +10,7 @@ export function useLogin() {
   const { mutate: loginUser, isLoading } = useMutation({
     mutationFn: login,
     onSuccess: (user) => {
+      console.log("fatos de usuario");
       queryClient.setQueryData(["user", user.user]);
       navigate("/");
     },

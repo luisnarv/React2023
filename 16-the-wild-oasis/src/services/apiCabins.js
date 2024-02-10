@@ -24,12 +24,13 @@ export async function createEditCabin(newCabin, id) {
   let query = supabase.from("cabins");
 
   //A Create
-  if (!id) query = query.insert([{ ...newCabin, image: imagePath }]);
+  if (!id) query = await query.insert([{ ...newCabin, image: imagePath }]);
 
   //B Edit
-  if (id) query = query.update({ ...newCabin, image: imagePath }).eq("id", id);
+  if (id)
+    query = await query.update({ ...newCabin, image: imagePath }).eq("id", id);
 
-  const { data, error } = await query;
+  const { data, error } = query;
 
   if (error) {
     console.log(error);

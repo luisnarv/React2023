@@ -89,35 +89,6 @@ export default function CabinRow({ cabin }) {
         <Discount>{formatCurrency(discount)}</Discount>
       )}
       <div>
-        {/*  <button disabled={isCreating} onClick={handleDuplicateCabin}>
-          <HiSquare2Stack />
-        </button>
-
-        <Modal>
-
-          <Modal.Open opens="edit">
-            <button onClick={() => setShowForm(!showForm)}>
-              <HiPencil />
-            </button>
-          </Modal.Open>
-          <Modal.Window name="edit">
-            <CreateCabinForm cabinToEdit={cabin} />
-          </Modal.Window>
-          <Modal.Open opens={"delete"}>
-            <button>
-              <HiTrash />
-            </button>
-          </Modal.Open>
-
-
-          <Modal.Window name="delete">
-            <ConfirmDelete
-              resourceName={"cabins"}
-              onConfirm={() => deleteCabin(cabinId)}
-              disabled={isDeleting}
-            />
-          </Modal.Window>
-        </Modal> */}
         <Modal>
           <Menus.Menu>
             <Menus.Toggle id={cabinId} />
